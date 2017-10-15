@@ -1,5 +1,5 @@
 import { RecipeService } from './../recipe.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Recipe } from '../recipe.model';
@@ -14,7 +14,7 @@ export class RecipeEditComponent implements OnInit {
   editMode = false;
   recipeForm : FormGroup;
 
-  constructor(private route: ActivatedRoute, private recipeService: RecipeService) { }
+  constructor(private route: ActivatedRoute, private recipeService: RecipeService, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -27,13 +27,14 @@ export class RecipeEditComponent implements OnInit {
 
   onFormSubmit() {
     // tslint:disable-next-line:max-line-length
-    const newRecipe = new Recipe(this.recipeForm.value['name'], this.recipeForm.value['imagePath'], this.recipeForm.value['description'], this.recipeForm.value['ingredients']);
+    const newRecipe = new Recipe(this.recipeForm.value['name'], this.recipeForm.value['description'], this.recipeForm.value['imagePath'], this.recipeForm.value['ingredients']);
 
     if (this.editMode){
       this.recipeService.updateRecipe(this.id,  newRecipe);
     }else {
       this.recipeService.addRecipe(newRecipe);
     }
+    this.onCancel();
   }
 
   onAddIngredient() {
@@ -46,6 +47,10 @@ export class RecipeEditComponent implements OnInit {
       ])
       })
     );
+  }
+
+  onCancel(){
+    this.router.navigate(['../'], {relativeTo: this.route})
   }
   private initForm() {
     let recipeName = '';
