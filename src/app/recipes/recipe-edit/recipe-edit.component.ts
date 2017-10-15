@@ -2,6 +2,7 @@ import { RecipeService } from './../recipe.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { Recipe } from '../recipe.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -25,7 +26,14 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onFormSubmit() {
-    console.log(this.recipeForm);
+    // tslint:disable-next-line:max-line-length
+    const newRecipe = new Recipe(this.recipeForm.value['name'], this.recipeForm.value['imagePath'], this.recipeForm.value['description'], this.recipeForm.value['ingredients']);
+
+    if (this.editMode){
+      this.recipeService.updateRecipe(this.id,  newRecipe);
+    }else {
+      this.recipeService.addRecipe(newRecipe);
+    }
   }
 
   onAddIngredient() {
@@ -45,7 +53,7 @@ export class RecipeEditComponent implements OnInit {
     let recipeDesc = '';
     let recipeIngredients = new FormArray([]);
 
-    if(this.editMode){
+    if (this.editMode){
       const recipe = this.recipeService.getRecipe(this.id);
       recipeName = recipe.name;
       recipeImage = recipe.imagePath;
