@@ -18,9 +18,12 @@ export class HeaderComponent {
       }
     );
   }
-
   onFetchData() {
     return this.dataStorageService.getRecipes();
+  }
+
+  onLogout(){
+    this.authService.logout();
   }
 
 }
