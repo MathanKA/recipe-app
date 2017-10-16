@@ -1,3 +1,4 @@
+import { SignupComponent } from './auth/signup/signup.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
@@ -15,6 +16,7 @@ const appRoutes: Routes = [
     { path: ':id/edit', component: RecipeEditComponent}
   ]},
   { path: 'shopping-list', component: ShoppingListComponent },
+  { path: 'signup', component: SignupComponent}
 
 ];
 
