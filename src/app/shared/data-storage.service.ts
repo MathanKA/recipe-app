@@ -8,13 +8,12 @@ import 'rxjs/Rx';
 @Injectable()
 
 export class DataStorageService {
-  constructor( private http: Http, private recipeService: RecipeService, private authService: AuthService){
+  constructor( private http: Http, private recipeService: RecipeService, private authService: AuthService) {
 
   }
 
   storeRecipes() {
     const token = this.authService.getToken();
-
     return this.http.put('https://ng4-recipe-app-21a94.firebaseio.com/recipes.json?auth=' + token, this.recipeService.getRecipes());
   }
 
